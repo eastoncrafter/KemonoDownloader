@@ -27,12 +27,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build with Briefcase
+      - name: Create and Build with Briefcase
         run: |
+          briefcase create windows
           briefcase build windows
-
-      - name: Package with Briefcase
-        run: |
           briefcase package windows
 
       - name: Upload Windows artifacts
@@ -49,6 +47,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Install gettext
+        run: |
+          brew unlink gettext || true
+          brew install gettext
+          brew link gettext --force
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -59,12 +63,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build with Briefcase
+      - name: Create and Build with Briefcase
         run: |
+          briefcase create macos
           briefcase build macos
-
-      - name: Package with Briefcase
-        run: |
           briefcase package macos --adhoc-sign
 
       - name: Upload macOS artifacts
@@ -92,12 +94,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Build with Briefcase
+      - name: Create and Build with Briefcase
         run: |
+          briefcase create linux
           briefcase build linux
-
-      - name: Package with Briefcase
-        run: |
           briefcase package linux
 
       - name: Upload Linux artifacts
